@@ -53,19 +53,20 @@ LIBRARY_EXPAT=39
 LIBRARY_SNDFILE=40
 LIBRARY_LEPTONICA=41
 LIBRARY_LIBSAMPLERATE=42
-LIBRARY_ZLIB=43
-LIBRARY_AUDIOTOOLBOX=44
-LIBRARY_BZIP2=45
-LIBRARY_VIDEOTOOLBOX=46
-LIBRARY_AVFOUNDATION=47
-LIBRARY_LIBICONV=48
-LIBRARY_LIBUUID=49
+LIBRARY_LIBSRT=43
+LIBRARY_ZLIB=44
+LIBRARY_AUDIOTOOLBOX=45
+LIBRARY_BZIP2=46
+LIBRARY_VIDEOTOOLBOX=47
+LIBRARY_AVFOUNDATION=48
+LIBRARY_LIBICONV=49
+LIBRARY_LIBUUID=50
 
 # ENABLE ARCH
 ENABLED_ARCHITECTURES=(1 1 1 1 1 1 1)
 
 # ENABLE LIBRARIES
-ENABLED_LIBRARIES=(0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0)
+ENABLED_LIBRARIES=(0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0)
 
 export BASEDIR=$(pwd)
 
@@ -228,7 +229,7 @@ reconf_library() {
   local RECONF_VARIABLE=$(echo "RECONF_$1" | sed "s/\-/\_/g")
   local library_supported=0
 
-  for library in {1..43}; do
+  for library in {1..44}; do
     library_name=$(get_library_name $((library - 1)))
 
     if [[ $1 != "ffmpeg" ]] && [[ ${library_name} == "$1" ]]; then
@@ -247,7 +248,7 @@ rebuild_library() {
   local REBUILD_VARIABLE=$(echo "REBUILD_$1" | sed "s/\-/\_/g")
   local library_supported=0
 
-  for library in {1..43}; do
+  for library in {1..44}; do
     library_name=$(get_library_name $((library - 1)))
 
     if [[ $1 != "ffmpeg" ]] && [[ ${library_name} == "$1" ]]; then
@@ -266,7 +267,7 @@ redownload_library() {
   local REDOWNLOAD_VARIABLE=$(echo "REDOWNLOAD_$1" | sed "s/\-/\_/g")
   local library_supported=0
 
-  for library in {0..42}; do
+  for library in {0..43}; do
     library_name=$(get_library_name ${library})
 
     if [[ ${library_name} == $1 ]]; then
@@ -464,6 +465,9 @@ set_library() {
     ENABLED_LIBRARIES[LIBRARY_TIFF]=$2
     ENABLED_LIBRARIES[LIBRARY_JPEG]=$2
     ;;
+  libsrt)
+    ENABLED_LIBRARIES[LIBRARY_LIBSRT]=$2
+    ;;
   *)
     print_unknown_library "$1"
     ;;
@@ -545,7 +549,7 @@ print_enabled_libraries() {
   let enabled=0
 
   # FIRST BUILT-IN LIBRARIES
-  for library in {43..49}; do
+  for library in {44..50}; do
     if [[ ${ENABLED_LIBRARIES[$library]} -eq 1 ]]; then
       if [[ ${enabled} -ge 1 ]]; then
         echo -n ", "
@@ -843,7 +847,7 @@ get_external_library_license_path() {
   37) echo "${BASEDIR}/src/$(get_library_name "$1")/COPYING.LESSERv3" ;;
   38) echo "${BASEDIR}/src/$(get_library_name "$1")/COPYRIGHT" ;;
   41) echo "${BASEDIR}/src/$(get_library_name "$1")/leptonica-license.txt" ;;
-  4 | 9 | 12 | 18 | 20 | 26 | 31 | 36) echo "${BASEDIR}/src/$(get_library_name "$1")/LICENSE" ;;
+  4 | 9 | 12 | 18 | 20 | 26 | 31 | 36 | 43) echo "${BASEDIR}/src/$(get_library_name "$1")/LICENSE" ;;
   *) echo "${BASEDIR}/src/$(get_library_name "$1")/COPYING" ;;
   esac
 }
@@ -942,7 +946,7 @@ while [ ! $# -eq 0 ]; do
 done
 
 if [[ -n ${BUILD_FULL} ]]; then
-  for library in {0..49}; do
+  for library in {0..50}; do
     if [ ${GPL_ENABLED} == "yes" ]; then
       enable_library $(get_library_name $library)
     else
@@ -1113,7 +1117,7 @@ if [[ -n ${TARGET_ARCH_LIST[0]} ]]; then
   fi
 
   # 1. EXTERNAL LIBRARIES
-  for library in {0..42}; do
+  for library in {0..43}; do
     if [[ ${ENABLED_LIBRARIES[$library]} -eq 1 ]]; then
 
       library_name=$(get_library_name ${library})

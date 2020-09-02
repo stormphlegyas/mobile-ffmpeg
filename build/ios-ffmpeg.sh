@@ -95,14 +95,19 @@ case ${ARCH} in
 esac
 
 library=1
-while [[ ${library} -le 49 ]]
+while [[ ${library} -le 50 ]]
 do
     if [[ ${!library} -eq 1 ]]; then
         ENABLED_LIBRARY=$(get_library_name $((library - 1)))
 
         echo -e "INFO: Enabling library ${ENABLED_LIBRARY}" 1>>${BASEDIR}/build.log 2>&1
-
+        
         case ${ENABLED_LIBRARY} in
+            libsrt)
+                FFMPEG_CFLAGS+=" $(pkg-config --cflags libsrt)"
+                FFMPEG_LDFLAGS+=" $(pkg-config --libs --static libsrt)"
+                CONFIGURE_POSTFIX+=" --enable-libsrt"
+            ;;
             chromaprint)
                 FFMPEG_CFLAGS+=" $(pkg-config --cflags libchromaprint)"
                 FFMPEG_LDFLAGS+=" $(pkg-config --libs --static libchromaprint)"
@@ -324,17 +329,17 @@ do
         # NOTE THAT IDS MUST BE +1 OF THE INDEX VALUE
         if [[ ${library} -eq 30 ]]; then
             CONFIGURE_POSTFIX+=" --disable-sdl2"
-        elif [[ ${library} -eq 44 ]]; then
-            CONFIGURE_POSTFIX+=" --disable-zlib"
         elif [[ ${library} -eq 45 ]]; then
-            CONFIGURE_POSTFIX+=" --disable-audiotoolbox"
+            CONFIGURE_POSTFIX+=" --disable-zlib"
         elif [[ ${library} -eq 46 ]]; then
-            CONFIGURE_POSTFIX+=" --disable-bzlib"
+            CONFIGURE_POSTFIX+=" --disable-audiotoolbox"
         elif [[ ${library} -eq 47 ]]; then
-            CONFIGURE_POSTFIX+=" --disable-videotoolbox"
+            CONFIGURE_POSTFIX+=" --disable-bzlib"
         elif [[ ${library} -eq 48 ]]; then
-            CONFIGURE_POSTFIX+=" --disable-avfoundation"
+            CONFIGURE_POSTFIX+=" --disable-videotoolbox"
         elif [[ ${library} -eq 49 ]]; then
+            CONFIGURE_POSTFIX+=" --disable-avfoundation"
+        elif [[ ${library} -eq 50 ]]; then
             CONFIGURE_POSTFIX+=" --disable-iconv"
         fi
     fi
