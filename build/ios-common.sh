@@ -47,13 +47,14 @@ get_library_name() {
         40) echo "libsndfile" ;;
         41) echo "leptonica" ;;
         42) echo "libsamplerate" ;;
-        43) echo "ios-zlib" ;;
-        44) echo "ios-audiotoolbox" ;;
-        45) echo "ios-bzip2" ;;
-        46) echo "ios-videotoolbox" ;;
-        47) echo "ios-avfoundation" ;;
-        48) echo "ios-libiconv" ;;
-        49) echo "ios-libuuid" ;;
+        43) echo "libsrt" ;;
+        44) echo "ios-zlib" ;;
+        45) echo "ios-audiotoolbox" ;;
+        46) echo "ios-bzip2" ;;
+        47) echo "ios-videotoolbox" ;;
+        48) echo "ios-avfoundation" ;;
+        49) echo "ios-libiconv" ;;
+        50) echo "ios-libuuid" ;;
     esac
 }
 
@@ -99,6 +100,7 @@ get_static_archive_name() {
         40) echo "libsndfile.a" ;;
         41) echo "liblept.a" ;;
         42) echo "libsamplerate.a" ;;
+        43) echo "libsrt.a" ;;
         *) echo lib$(get_library_name $1).a
     esac
 }
