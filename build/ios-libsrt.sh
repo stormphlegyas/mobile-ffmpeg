@@ -57,7 +57,7 @@ x86-64)
   TARGET_ARCH="x86_64"
   ;;
 x86-64-mac-catalyst)
-  TARGET_ARCH="x86_64-mac-catalyst"
+  TARGET_ARCH="x86_64"
   ;;
 *)
   TARGET_ARCH="${ARCH}"
@@ -72,7 +72,7 @@ esac
 #export IOS_OPENSSL="${BASEDIR}/src/${LIB_NAME}/OpenSSL-for-iPhone/bin/iPhoneOS13.6-arm64.sdk"
 
 #cd ..
-./configure --cmake-c-compiler=$(xcrun --sdk iphoneos -find clang) --cmake-c++-compiler=$(xcrun --sdk iphoneos -find clang++) --cmake-cxx-flags="-isystem ${SDK_PATH} -arch ${TARGET_ARCH} -fembed-bitcode" --cmake-c-flags="-isysroot ${SDK_PATH} -arch ${TARGET_ARCH} -fembed-bitcode" --sysroot="${SDK_PATH}" --disable-encryption --disable-apps --cmake-osx-sysroot="${SDK_PATH}"
+./configure --cmake-c-compiler=$(xcrun --sdk iphoneos -find clang) --cmake-c++-compiler=$(xcrun --sdk iphoneos -find clang++) --cmake-cxx-flags="-isystem ${SDK_PATH} -arch ${TARGET_ARCH} -target $(get_target_host) -fembed-bitcode" --cmake-c-flags="-isysroot ${SDK_PATH} -arch ${TARGET_ARCH} -target $(get_target_host) -fembed-bitcode" --sysroot="${SDK_PATH}" --disable-encryption --disable-apps --cmake-osx-sysroot="${SDK_PATH}"
 
 #cmake -DCMAKE_INSTALL_PREFIX="${BASEDIR}/prebuilt/$(get_target_build_directory)/${LIB_NAME}" -DENABLE_C_DEPS=ON -DENABLE_SHARED=OFF -DENABLE_STATIC=ON
 
