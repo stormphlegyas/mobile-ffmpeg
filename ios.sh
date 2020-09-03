@@ -81,7 +81,7 @@ if ! [ -x "$(command -v xcrun)" ]; then
 fi
 
 # USE 12.1 AS DEFAULT IOS_MIN_VERSION
-export IOS_MIN_VERSION=12.1
+export IOS_MIN_VERSION=10.0
 
 get_mobile_ffmpeg_version() {
   local MOBILE_FFMPEG_VERSION=$(grep 'const MOBILE_FFMPEG_VERSION' "${BASEDIR}/ios/src/MobileFFmpeg.m" | grep -Eo '\".*\"' | sed -e 's/\"//g')
