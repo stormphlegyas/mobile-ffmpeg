@@ -213,7 +213,7 @@ download_library_source() {
     ;;
   ffmpeg)
     LIB_REPO_URL="https://github.com/stormphlegyas/FFmpeg"
-    SOURCE_ID="d636d9c89b71eb65027ee42744b169273594fad4"      # COMMIT -> v4.4-dev-416
+    SOURCE_ID="9fd249952dbd73763032f5b158c682e367869319"      # COMMIT -> v4.4-dev-416
     SOURCE_TYPE="COMMIT"
     ;;
   esac
